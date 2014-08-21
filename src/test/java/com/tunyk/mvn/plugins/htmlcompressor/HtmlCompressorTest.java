@@ -49,13 +49,17 @@ public class HtmlCompressorTest {
     @Test
     public void testCompress() throws Exception {
         LOG.info("Testing compress method...");
+        
+        String[] exclude = {"Template1.html",""}; // exclude Template1.html from being compressed
 
         HtmlCompressor htmlCompressor = new HtmlCompressor("src/test/resources/html", "target/test/htmlcompressor/0");
+        htmlCompressor.setExclude(exclude);
         htmlCompressor.compress();
         // TODO: test files where created and every one has the right contents
 
         htmlCompressor = new HtmlCompressor("src/test/resources/html", "target/test/htmlcompressor/1",
                 true, "target/test/htmlcompressor/1/integration.js", "src/test/resources/html/integration.js");
+        htmlCompressor.setExclude(exclude);
         htmlCompressor.compress();
         // TODO: test json file was created and it has right contents
 
@@ -63,6 +67,7 @@ public class HtmlCompressorTest {
         com.googlecode.htmlcompressor.compressor.HtmlCompressor htmlCompressorHandler = new com.googlecode.htmlcompressor.compressor.HtmlCompressor();
         htmlCompressorHandler.setEnabled(false);
         htmlCompressor.setHtmlCompressor(htmlCompressorHandler);
+        htmlCompressor.setExclude(exclude);
         htmlCompressor.compress();
         // TODO: verify if provided compression params are picked up
 

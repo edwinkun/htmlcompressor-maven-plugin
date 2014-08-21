@@ -60,6 +60,12 @@ The source code is available on GitHub `htmlcompressor-maven-plugin <https://git
 ::
     git clone https://github.com/TUNYK/htmlcompressor-maven-plugin.git
 
+
+Modifications
+"""""""""""""""
+Modified by Muhammad Edwin, adding parameters to exclude compressing certain filename.
+
+
 Issues tracking
 """""""""""""""
 Issues tracking is available on `GitHub issues <https://github.com/TUNYK/htmlcompressor-maven-plugin/issues>`_

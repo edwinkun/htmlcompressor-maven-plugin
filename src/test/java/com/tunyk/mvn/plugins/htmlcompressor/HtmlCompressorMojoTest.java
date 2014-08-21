@@ -54,12 +54,13 @@ public class HtmlCompressorMojoTest {
     public void testExecute() throws MojoExecutionException {
         LOG.info("Testing mojo execution...");
 
+        String[] exclude = {"Template1.html",""}; // exclude Template1.html from being compressed
+        
         HtmlCompressorMojo htmlCompressorMojo = new HtmlCompressorMojo();
-        htmlCompressorMojo.setSrcFolder("src/test/resources/html");
+        htmlCompressorMojo.setSrcFolder("src/test/resources/html"); 
+        htmlCompressorMojo.setExclude(exclude);
         htmlCompressorMojo.setJavascriptHtmlSpriteIntegrationFile("src/test/resources/html/integration.js");
         htmlCompressorMojo.execute();
-
-        // TODO: test results
 
         LOG.info("Passed");
     }

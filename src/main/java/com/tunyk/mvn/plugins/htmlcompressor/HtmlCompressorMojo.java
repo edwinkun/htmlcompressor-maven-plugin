@@ -58,6 +58,13 @@ public class HtmlCompressorMojo extends AbstractMojo {
     private String[] fileExt;
     
     /**
+     * file names to be excluded
+     *
+     * @parameter expression="${htmlcompressor.exclude}"
+     */
+    private String[] exclude;
+    
+    /**
      * if false all compression is off (default is true)
      *
      * @parameter expression="${htmlcompressor.enabled}" default-value="true"
@@ -333,6 +340,7 @@ public class HtmlCompressorMojo extends AbstractMojo {
         HtmlCompressor htmlCompressor = new HtmlCompressor(srcFolder, targetFolder);
 
         htmlCompressor.setFileExt(fileExt);
+        htmlCompressor.setExclude(exclude);
         htmlCompressor.setFileEncoding(encoding);
         htmlCompressor.setCreateJsonFile(javascriptHtmlSprite);
         htmlCompressor.setJsonIntegrationFilePath(javascriptHtmlSpriteIntegrationFile);
@@ -791,4 +799,14 @@ public class HtmlCompressorMojo extends AbstractMojo {
     public void setClosureExterns(String[] closureExterns) {
         this.closureExterns = closureExterns;
     }
+
+    public String[] getExclude() {
+        return exclude;
+    }
+
+    public void setExclude(String[] exclude) {
+        this.exclude = exclude;
+    }
+    
+    
 }

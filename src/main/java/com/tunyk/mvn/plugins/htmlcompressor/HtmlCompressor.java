@@ -21,6 +21,8 @@ package com.tunyk.mvn.plugins.htmlcompressor;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,6 +33,8 @@ public class HtmlCompressor {
     private static final String[] FILE_EXT = {"htm", "html"};
 
     private String[] fileExt;
+    private String[] exclude;
+    
     private String srcDirPath;
     private String targetDirPath;
     private String fileEncoding;
@@ -51,7 +55,7 @@ public class HtmlCompressor {
         this.targetJsonFilePath = targetJsonFilePath;
         this.jsonIntegrationFilePath = jsonIntegrationFilePath;
     }
-
+    
     public void compress()  throws Exception {
         if (fileExt == null || fileExt.length == 0) {
             fileExt = FILE_EXT;
@@ -64,9 +68,17 @@ public class HtmlCompressor {
         if (htmlCompressor == null) {
             htmlCompressor = new com.googlecode.htmlcompressor.compressor.HtmlCompressor();
         }
-
+        
+        List<String> excludes = Arrays.asList(exclude);
+        
         for(String key : map.keySet()) {
-            map.put(key, htmlCompressor.compress(map.get(key)));
+            String[] bits = key.split("/");
+            if(excludes.contains(bits[bits.length-1])) {
+                map.put(key, map.get(key));                
+            }
+            else {
+                map.put(key, htmlCompressor.compress(map.get(key)));
+            }
         }
 
         fileTool.writeFiles(map, targetDirPath);
@@ -138,5 +150,13 @@ public class HtmlCompressor {
 
     public void setHtmlCompressor(com.googlecode.htmlcompressor.compressor.HtmlCompressor htmlCompressor) {
         this.htmlCompressor = htmlCompressor;
+    }
+
+    public String[] getExclude() {
+        return exclude;
+    }
+
+    public void setExclude(String[] exclude) {
+        this.exclude = exclude;
     }
 }
